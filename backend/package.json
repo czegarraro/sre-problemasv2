@@ -1,0 +1,53 @@
+{
+  "name": "dynatrace-problems-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Dynatrace Problems Dashboard",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "dev:safe": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "vercel-build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "setup-ingestion": "tsx scripts/setupIngestion.ts",
+    "sync-dynatrace": "tsx scripts/syncDynatraceProblems.ts"
+  },
+  "keywords": ["dynatrace", "monitoring", "dashboard"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.22.4",
+    "express-rate-limit": "^7.1.5",
+    "cookie-parser": "^1.4.6",
+    "compression": "^1.7.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.6",
+    "@types/compression": "^1.7.5",
+    "@types/morgan": "^1.9.9",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "@vercel/node": "^3.0.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "vitest": "^1.1.1"
+  }
+}

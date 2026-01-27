@@ -1,0 +1,5 @@
+﻿src/services/dynatraceService.ts(98,11): error TS6133: 'baseUrl' is declared but its value is never read.
+src/services/dynatraceService.ts(188,46): error TS18046: 'data' is of type 'unknown'.
+src/services/dynatraceService.ts(191,23): error TS18046: 'data' is of type 'unknown'.
+src/services/dynatraceService.ts(233,7): error TS2322: Type 'unknown' is not assignable to type 'EnrichedProblem | null'.
+src/services/dynatraceSyncService.ts(6,28): error TS6133: 'TransformedProblem' is declared but its value is never read.

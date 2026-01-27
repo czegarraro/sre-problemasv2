@@ -1,0 +1,47 @@
+﻿
+> dynatrace-problems-backend@1.0.0 sync-dynatrace
+> tsx scripts/syncDynatraceProblems.ts
+
+
+========================================
+ Dynatrace Manual Sync
+========================================
+
+­ƒôï Validating configuration...
+Ô£à Configuration valid
+
+­ƒôï Testing Dynatrace connection...
+[2026-01-26T04:21:24.089Z] [INFO] [DYNATRACE] Testing connection...
+Ô£à Dynatrace connection successful
+
+­ƒôï Connecting to MongoDB...
+[2026-01-26T04:21:24.789Z] [INFO] [SYNC] Initializing MongoDB connection...
+Ô£à MongoDB connected
+[2026-01-26T04:21:25.961Z] [INFO] [SYNC] Creating/updating indexes...
+Ô£à Indexes created/updated
+
+­ƒôï Starting synchronization...
+
+========================================
+ Dynatrace Sync Started
+========================================
+[2026-01-26T04:21:27.380Z] [INFO] [SYNC] Checking storage capacity...
+[2026-01-26T04:21:28.234Z] [INFO] [SYNC] Date range: 2025-10-28T04:21:28.234Z to 2026-01-26T04:21:28.234Z
+[2026-01-26T04:21:28.234Z] [INFO] [SYNC] Phase 1: Fetching problems from Dynatrace...
+[2026-01-26T04:21:28.234Z] [INFO] [DYNATRACE] Fetching problems from 2025-10-28T04:21:28.234Z to 2026-01-26T04:21:28.234Z
+node.exe : [2026-01-26T04:21:52.700Z] [WARN] 
+[DYNATRACE] Reached page limit, stopping pagination
+En C:\Program Files\nodejs\npm.ps1: 29 Carácter: 3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([2026 
+   -01-26T04:...ping pagination:String) [], Remot  
+  eException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[2026-01-26T04:21:52.700Z] [INFO] [DYNATRACE] Total problems fetched: 10000
+[2026-01-26T04:21:52.700Z] [INFO] [SYNC] Ô£ô Fetched 10000 problems
+[2026-01-26T04:21:52.701Z] [INFO] [SYNC] Phase 2: Enriching problems with details...
+[2026-01-26T04:21:52.701Z] [INFO] [DYNATRACE] Enriching 10000 problems (concurrency: 5)
+[2026-01-26T04:34:11.811Z] [INFO] [SYNC] Phase 3: Transforming problems...
+[2026-01-26T04:34:11.855Z] [INFO] [SYNC] Phase 4: Syncing to MongoDB (upsert)...
