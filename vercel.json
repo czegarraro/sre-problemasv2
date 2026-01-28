@@ -2,6 +2,9 @@
   "version": 2,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/backend/api/index.ts" },
+    { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },
+    { "source": "/vite.svg", "destination": "/frontend/vite.svg" },
+    { "source": "/favicon.ico", "destination": "/frontend/favicon.ico" },
     { "source": "/(.*)", "destination": "/frontend/index.html" }
   ],
   "builds": [
