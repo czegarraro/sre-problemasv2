@@ -57,6 +57,56 @@ export class AnalyticsService {
       match['entityTags.stringRepresentation'] = { $in: filters.entityTags };
     }
 
+    // Squads filter (tagValue in tn-squad)
+    if (filters.squads && filters.squads.length > 0) {
+      match.$and = match.$and || [];
+      const specifiedSquads = filters.squads.filter(s => s !== 'UNASSIGNED');
+      const hasUnassigned = filters.squads.includes('UNASSIGNED');
+      const squadConditions: any[] = [];
+      
+      if (specifiedSquads.length > 0) {
+        squadConditions.push(
+          { 'entityTags': { $elemMatch: { key: 'tn-squad', value: { $in: specifiedSquads } } } },
+          { 'evidenceDetails.details.data.entityTags': { $elemMatch: { key: 'tn-squad', value: { $in: specifiedSquads } } } }
+        );
+      }
+      
+      if (hasUnassigned) {
+        squadConditions.push({
+          $and: [
+            { 'entityTags.key': { $ne: 'tn-squad' } },
+            { 'evidenceDetails.details.data.entityTags.key': { $ne: 'tn-squad' } }
+          ]
+        });
+      }
+      match.$and.push({ $or: squadConditions });
+    }
+
+    // Tribes filter (tagValue in tn-tribu)
+    if (filters.tribes && filters.tribes.length > 0) {
+      match.$and = match.$and || [];
+      const specifiedTribes = filters.tribes.filter(t => t !== 'UNASSIGNED');
+      const hasUnassigned = filters.tribes.includes('UNASSIGNED');
+      const tribeConditions: any[] = [];
+      
+      if (specifiedTribes.length > 0) {
+        tribeConditions.push(
+          { 'entityTags': { $elemMatch: { key: 'tn-tribu', value: { $in: specifiedTribes } } } },
+          { 'evidenceDetails.details.data.entityTags': { $elemMatch: { key: 'tn-tribu', value: { $in: specifiedTribes } } } }
+        );
+      }
+      
+      if (hasUnassigned) {
+        tribeConditions.push({
+          $and: [
+            { 'entityTags.key': { $ne: 'tn-tribu' } },
+            { 'evidenceDetails.details.data.entityTags.key': { $ne: 'tn-tribu' } }
+          ]
+        });
+      }
+      match.$and.push({ $or: tribeConditions });
+    }
+
     // Date range filter
     if (filters.dateFrom || filters.dateTo) {
       match.startTime = {};
@@ -788,6 +838,130 @@ export class AnalyticsService {
       { name: 'No', value: sinAutoremediado },
     ];
 
+    return { data };
+  }
+
+  /**
+   * Get squad distribution (doughnut chart data) using aggregation
+   */
+  async getSquadDistribution(filters?: ProblemFilters) {
+    const collection = this.getCollection();
+    const match = this.buildMatchStage(filters);
+
+    const pipeline = [
+      { $match: match },
+      {
+        $project: {
+          squadTags: {
+            $filter: {
+              input: {
+                $concatArrays: [
+                  { $ifNull: ['$entityTags', []] },
+                  {
+                    $reduce: {
+                      input: { $ifNull: ['$evidenceDetails.details', []] },
+                      initialValue: [],
+                      in: { $concatArrays: ['$$value', { $ifNull: ['$$this.data.entityTags', []] }] }
+                    }
+                  }
+                ]
+              },
+              as: 'tag',
+              cond: { $eq: ['$$tag.key', 'tn-squad'] }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          squad: {
+            $cond: [
+              { $gt: [{ $size: '$squadTags' }, 0] },
+              { $arrayElemAt: ['$squadTags.value', 0] },
+              'Sin Squad'
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$squad',
+          value: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          name: { $ifNull: ['$_id', 'Sin Squad'] },
+          value: 1
+        }
+      },
+      { $sort: { value: -1 } }
+    ];
+
+    const data = await collection.aggregate(pipeline).toArray();
+    return { data };
+  }
+
+  /**
+   * Get tribe distribution (doughnut chart data) using aggregation
+   */
+  async getTribeDistribution(filters?: ProblemFilters) {
+    const collection = this.getCollection();
+    const match = this.buildMatchStage(filters);
+
+    const pipeline = [
+      { $match: match },
+      {
+        $project: {
+          tribeTags: {
+            $filter: {
+              input: {
+                $concatArrays: [
+                  { $ifNull: ['$entityTags', []] },
+                  {
+                    $reduce: {
+                      input: { $ifNull: ['$evidenceDetails.details', []] },
+                      initialValue: [],
+                      in: { $concatArrays: ['$$value', { $ifNull: ['$$this.data.entityTags', []] }] }
+                    }
+                  }
+                ]
+              },
+              as: 'tag',
+              cond: { $eq: ['$$tag.key', 'tn-tribu'] }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          tribe: {
+            $cond: [
+              { $gt: [{ $size: '$tribeTags' }, 0] },
+              { $arrayElemAt: ['$tribeTags.value', 0] },
+              'Sin Tribu'
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$tribe',
+          value: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          name: { $ifNull: ['$_id', 'Sin Tribu'] },
+          value: 1
+        }
+      },
+      { $sort: { value: -1 } }
+    ];
+
+    const data = await collection.aggregate(pipeline).toArray();
     return { data };
   }
 

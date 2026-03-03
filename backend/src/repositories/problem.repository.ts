@@ -43,19 +43,73 @@ export class ProblemRepository {
       mongoFilter['affectedEntities.entityId.type'] = { $in: filters.affectedEntityTypes };
     }
 
-    // Entity Tags filter
     if (filters.entityTags && filters.entityTags.length > 0) {
       mongoFilter['entityTags.stringRepresentation'] = { $in: filters.entityTags };
     }
 
-    // Date range filter
+    // Squads filter (tagValue in tn-squad)
+    if (filters.squads && filters.squads.length > 0) {
+      mongoFilter.$and = mongoFilter.$and || [];
+      const specifiedSquads = filters.squads.filter(s => s !== 'UNASSIGNED');
+      const hasUnassigned = filters.squads.includes('UNASSIGNED');
+      const squadConditions: any[] = [];
+      
+      if (specifiedSquads.length > 0) {
+        squadConditions.push(
+          { 'entityTags': { $elemMatch: { key: 'tn-squad', value: { $in: specifiedSquads } } } },
+          { 'evidenceDetails.details.data.entityTags': { $elemMatch: { key: 'tn-squad', value: { $in: specifiedSquads } } } }
+        );
+      }
+      
+      if (hasUnassigned) {
+        squadConditions.push({
+          $and: [
+            { 'entityTags.key': { $ne: 'tn-squad' } },
+            { 'evidenceDetails.details.data.entityTags.key': { $ne: 'tn-squad' } }
+          ]
+        });
+      }
+      mongoFilter.$and.push({ $or: squadConditions });
+    }
+
+    // Tribes filter (tagValue in tn-tribu)
+    if (filters.tribes && filters.tribes.length > 0) {
+      mongoFilter.$and = mongoFilter.$and || [];
+      const specifiedTribes = filters.tribes.filter(t => t !== 'UNASSIGNED');
+      const hasUnassigned = filters.tribes.includes('UNASSIGNED');
+      const tribeConditions: any[] = [];
+      
+      if (specifiedTribes.length > 0) {
+        tribeConditions.push(
+          { 'entityTags': { $elemMatch: { key: 'tn-tribu', value: { $in: specifiedTribes } } } },
+          { 'evidenceDetails.details.data.entityTags': { $elemMatch: { key: 'tn-tribu', value: { $in: specifiedTribes } } } }
+        );
+      }
+      
+      if (hasUnassigned) {
+        tribeConditions.push({
+          $and: [
+            { 'entityTags.key': { $ne: 'tn-tribu' } },
+            { 'evidenceDetails.details.data.entityTags.key': { $ne: 'tn-tribu' } }
+          ]
+        });
+      }
+      mongoFilter.$and.push({ $or: tribeConditions });
+    }
+
+    // Date range filter - FIX: Convert strings to Date objects
     if (filters.dateFrom || filters.dateTo) {
       mongoFilter.startTime = {};
       if (filters.dateFrom) {
-        mongoFilter.startTime.$gte = filters.dateFrom;
+        mongoFilter.startTime.$gte = new Date(filters.dateFrom);
       }
       if (filters.dateTo) {
-        mongoFilter.startTime.$lte = filters.dateTo;
+        // Set to end of day if it's just a date string, or use as is if ISO
+        const dateTo = new Date(filters.dateTo);
+        if (filters.dateTo.length === 10) { // YYYY-MM-DD
+            dateTo.setHours(23, 59, 59, 999);
+        }
+        mongoFilter.startTime.$lte = dateTo;
       }
     }
 
@@ -92,7 +146,7 @@ export class ProblemRepository {
       }
     }
 
-    // Duration filter (using duration field from DB)
+    // Duration filter
     if (filters.durationMin !== undefined || filters.durationMax !== undefined) {
       mongoFilter.duration = {};
       if (filters.durationMin !== undefined) {
@@ -103,21 +157,42 @@ export class ProblemRepository {
       }
     }
 
-    // Autoremediado filter - MongoDB field is 'Autoremediado' with capital A, stores 'Si', 'Sí', 'No' as strings
+    // Autoremediado filter - Fix: Handle nulls for 'false'
     if (filters.autoremediado !== undefined && filters.autoremediado !== null) {
       if (filters.autoremediado === true) {
         mongoFilter.Autoremediado = { $in: ['Si', 'Sí', 'si', 'sí', 'YES', 'yes', 'true', '1'] };
       } else {
-        mongoFilter.Autoremediado = { $nin: ['Si', 'Sí', 'si', 'sí', 'YES', 'yes', 'true', '1'] };
+         // False should match 'No', 'no', null, or missing field
+         mongoFilter.$or = [
+            { Autoremediado: { $in: ['No', 'no', 'false', '0'] } },
+            { Autoremediado: { $exists: false } },
+            { Autoremediado: null }
+         ];
       }
     }
 
-    // FuncionoAutoRemediacion filter - MongoDB field uses capital letters, stores 'Si', 'Sí', 'No' as strings
+    // FuncionoAutoRemediacion filter - Fix: Handle nulls for 'false'
     if (filters.funcionoAutoRemediacion !== undefined && filters.funcionoAutoRemediacion !== null) {
       if (filters.funcionoAutoRemediacion === true) {
         mongoFilter.FuncionoAutoRemediacion = { $in: ['Si', 'Sí', 'si', 'sí', 'YES', 'yes', 'true', '1'] };
       } else {
-        mongoFilter.FuncionoAutoRemediacion = { $nin: ['Si', 'Sí', 'si', 'sí', 'YES', 'yes', 'true', '1'] };
+         const autoRemediadoOrCondition = mongoFilter.$or || [];
+         const funcionoCondition = [
+            { FuncionoAutoRemediacion: { $in: ['No', 'no', 'false', '0'] } },
+            { FuncionoAutoRemediacion: { $exists: false } },
+            { FuncionoAutoRemediacion: null }
+         ];
+         
+         // Merge OR conditions if both filters are active (complex case, but usually distinct)
+         if (mongoFilter.$or) {
+             mongoFilter.$and = [
+                 { $or: mongoFilter.$or },
+                 { $or: funcionoCondition }
+             ];
+             delete mongoFilter.$or;
+         } else {
+             mongoFilter.$or = funcionoCondition;
+         }
       }
     }
 
@@ -187,17 +262,19 @@ export class ProblemRepository {
       'managementZones.name': 1,
       'affectedEntities.entityId.type': 1,
       'evidenceDetails.details.evidenceType': 1,
-      'recentComments.totalCount': 1,
+    'evidenceDetails.details.data.entityTags': 1,
+    'recentComments.totalCount': 1,
       'recentComments.comments': 1,
+      entityTags: 1,
     };
 
-    let query = this.collection.find(mongoFilter, { projection });
+    let query = this.collection.find(mongoFilter, { projection }).sort({ startTime: -1 });
     
     // Apply limit if provided (default to 10000 for analytics)
     if (limit) {
       query = query.limit(limit);
     } else {
-      query = query.limit(10000);
+      query = query.limit(30000);
     }
     
     const problems = await query.toArray() as unknown as Problem[];
@@ -278,6 +355,7 @@ export class ProblemRepository {
       entityTypes,
       evidenceTypes,
       tags: Array.from(tags),
+      squads: await database.getCollection('squads').find().sort({ name: 1 }).toArray(),
     };
   }
 }

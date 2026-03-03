@@ -147,62 +147,80 @@ class DynatraceService {
     pageSize?: number;
   }): Promise<DynatraceProblem[]> {
     try {
-      const { from, to, status, pageSize = 500 } = options || {};
+      const { status, pageSize = 500 } = options || {};
 
       // Default to last 90 days
-      const dateRange = from && to 
-        ? { start: from, end: to }
+      const dateRange = options?.from && options?.to
+        ? { start: options.from, end: options.to }
         : DateHelper.getLastNDaysRange(ingestionConfig.retentionDays);
 
-      const fromTs = DateHelper.toDynatraceTimestamp(dateRange.start);
-      const toTs = DateHelper.toDynatraceTimestamp(dateRange.end);
-
-      let url = `${getProblemsApiUrl()}?from=${fromTs}&to=${toTs}&pageSize=${pageSize}`;
-      if (status) {
-        url += `&status=${status}`;
-      }
-
-      logger.info(`[DYNATRACE] Fetching problems from ${DateHelper.formatForLog(dateRange.start)} to ${DateHelper.formatForLog(dateRange.end)}`);
+      logger.info(`[DYNATRACE] Fetching total problems from ${DateHelper.formatForLog(dateRange.start)} to ${DateHelper.formatForLog(dateRange.end)}`);
 
       const allProblems: DynatraceProblem[] = [];
-      let nextPageKey: string | null = null;
-      let pageCount = 0;
-
-      do {
-        // When using nextPageKey, we must ONLY use the nextPageKey (no other params)
-        const pageUrl = nextPageKey 
-          ? `${getProblemsApiUrl()}?nextPageKey=${encodeURIComponent(nextPageKey)}`
-          : url;
-        
-        const response = await fetch(pageUrl, {
-          method: 'GET',
-          headers: this.headers
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`API error ${response.status}: ${errorText}`);
+      const chunkDays = 7; // 7-day chunks to avoid 10,000 Dynatrace limit
+      let currentEnd = dateRange.end;
+      
+      while (currentEnd > dateRange.start) {
+        let currentStart = new Date(currentEnd);
+        currentStart.setDate(currentStart.getDate() - chunkDays);
+        if (currentStart < dateRange.start) {
+          currentStart = dateRange.start;
         }
 
-        const data = await response.json() as { problems?: DynatraceProblem[]; nextPageKey?: string };
-        const problems: DynatraceProblem[] = data.problems || [];
-        allProblems.push(...problems);
-        
-        nextPageKey = data.nextPageKey || null;
-        pageCount++;
+        const fromTs = DateHelper.toDynatraceTimestamp(currentStart);
+        const toTs = DateHelper.toDynatraceTimestamp(currentEnd);
 
-        logger.debug(`[DYNATRACE] Page ${pageCount}: fetched ${problems.length} problems (total: ${allProblems.length})`);
-
-        // Limit pages to prevent infinite loops
-        if (pageCount >= 20) {
-          logger.warn('[DYNATRACE] Reached page limit, stopping pagination');
-          break;
+        let url = `${getProblemsApiUrl()}?from=${fromTs}&to=${toTs}&pageSize=${pageSize}`;
+        if (status) {
+           url += `&status=${status}`;
         }
 
-      } while (nextPageKey);
+        logger.info(`[DYNATRACE] Fetching chunk: ${DateHelper.formatForLog(currentStart)} to ${DateHelper.formatForLog(currentEnd)}`);
 
-      logger.info(`[DYNATRACE] Total problems fetched: ${allProblems.length}`);
-      return allProblems;
+        let nextPageKey: string | null = null;
+        let pageCount = 0;
+
+        do {
+          const pageUrl = nextPageKey
+            ? `${getProblemsApiUrl()}?nextPageKey=${encodeURIComponent(nextPageKey)}`
+            : url;
+
+          const response = await fetch(pageUrl, {
+            method: 'GET',
+            headers: this.headers
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API error ${response.status}: ${errorText}`);
+          }
+
+          const data = await response.json() as { problems?: DynatraceProblem[]; nextPageKey?: string };
+          const problems: DynatraceProblem[] = data.problems || [];
+          allProblems.push(...problems);
+
+          nextPageKey = data.nextPageKey || null;
+          pageCount++;
+
+          if (pageCount >= 500) {
+            logger.warn('[DYNATRACE] Reached chunk page limit (500), stopping pagination for this chunk');
+            break;
+          }
+
+        } while (nextPageKey);
+        
+        // Stop fetching extra chunks if we already hit 30,000 threshold to prevent endless memory loops in local/test memory
+        if (allProblems.length >= 30000) {
+            logger.warn(`[DYNATRACE] Reached maximum requested ingest volume of 30,000. Stopping chunks early.`);
+            break;
+        }
+
+        // Move the window backwards
+        currentEnd = currentStart;
+      }
+
+      logger.info(`[DYNATRACE] Total problems fetched across all chunks: ${allProblems.length}`);
+      return allProblems.slice(0, 30000); // Enforce max array size
 
     } catch (error) {
       logger.error('[DYNATRACE] Error fetching problems:', error);

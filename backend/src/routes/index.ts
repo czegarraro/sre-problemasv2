@@ -8,6 +8,9 @@ import analyticsRoutes from './analytics.routes';
 import filterRoutes from './filter.routes';
 import falsePositivesRoutes from './false-positives.routes';
 import dashboardSRERoutes from './dashboardSRE';
+import automationRoutes from './automation.routes';
+import squadRoutes from './squad.routes';
+import tribeRoutes from './tribe.routes';
 
 const router = Router();
 
@@ -18,6 +21,9 @@ router.use('/analytics', analyticsRoutes);
 router.use('/filters', filterRoutes);
 router.use('/false-positives', falsePositivesRoutes);
 router.use('/dashboard/sre', dashboardSRERoutes);
+router.use('/automation', automationRoutes);
+router.use('/squads', squadRoutes);
+router.use('/tribes', tribeRoutes);
 
 // Health check
 router.get('/health', (_req, res) => {

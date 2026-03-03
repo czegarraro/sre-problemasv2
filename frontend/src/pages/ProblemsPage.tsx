@@ -10,6 +10,10 @@ import Badge from '@/components/ui/Badge';
 import { getSeverityBadgeClass, getImpactBadgeClass, getStatusBadgeClass } from '@/lib/utils/color.utils';
 import { formatRelativeTime, calculateDuration, formatDuration } from '@/lib/utils/date.utils';
 import { formatSeverityLevel, formatImpactLevel } from '@/lib/utils/format.utils';
+import SquadFilter from '@/components/ui/SquadFilter';
+import TribeFilter from '@/components/ui/TribeFilter';
+import ProblemsAnalyticsCharts from '@/components/charts/ProblemsAnalyticsCharts';
+import ProblemsKPIBanner from '@/components/ui/ProblemsKPIBanner';
 
 const ProblemsPage: React.FC = () => {
   const { problems, isLoading, fetchProblems, page, limit, total, totalPages } = useProblemsStore();
@@ -29,14 +33,21 @@ const ProblemsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gradient">Problems</h1>
           <p className="text-muted-foreground mt-1">
             Showing {problems.length} of {total} problems
           </p>
         </div>
+        <div className="flex items-center gap-4 bg-white/5 p-2 rounded-lg border border-white/5">
+          <TribeFilter />
+          <SquadFilter />
+        </div>
       </div>
+
+      <ProblemsKPIBanner />
+      <ProblemsAnalyticsCharts />
 
       <Card variant="glass">
         <div className="overflow-x-auto">

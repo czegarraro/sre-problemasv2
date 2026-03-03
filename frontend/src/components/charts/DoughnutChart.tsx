@@ -56,17 +56,16 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
         {
           name: title || 'Distribution',
           type: 'pie',
-          radius: ['50%', '75%'], // Inner and outer radius for doughnut
+          radius: ['45%', '70%'], // Inner and outer radius for doughnut
           center: ['50%', '60%'],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
-            borderRadius: 8,
+            borderRadius: 4,
             borderColor: '#0f172a',
             borderWidth: 2,
           },
           label: {
             show: false,
-            position: 'center',
           },
           emphasis: {
             label: {

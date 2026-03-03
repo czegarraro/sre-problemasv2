@@ -94,6 +94,22 @@ export interface Problem {
   duration: number; // Duration in minutes
   evidenceDetails: EvidenceDetails;
   recentComments: RecentComments;
+  
+  // SRE Enrichment
+  isFalsePositive?: boolean;
+  falsePositiveScore?: number;
+  falsePositiveReason?: string;
+  classification?: 'NOISE' | 'LOW_IMPACT' | 'TOLERABLE_PERF' | 'VALID_INCIDENT' | 'FLAPPING' | 'MAINTENANCE_NOISE';
+  
+  // Phase 2.5 Fields
+  isFlapping?: boolean;
+  isMaintenanceWindow?: boolean;
+  maintenanceWindowReason?: string;
+  
+  // Sync Meta
+  lastSyncAt?: Date;
+  syncStatus?: string;
+
   impactAnalysis: ImpactAnalysis;
 }
 
@@ -104,6 +120,8 @@ export interface ProblemFilters {
   managementZones?: string[];
   affectedEntityTypes?: string[];
   entityTags?: string[];
+  squads?: string[];
+  tribes?: string[];
   dateFrom?: string;
   dateTo?: string;
   durationMin?: number;

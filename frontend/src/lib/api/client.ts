@@ -2,6 +2,7 @@
  * API Client Configuration
  */
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import qs from 'qs';
 import { ApiError } from '@/types/api.types';
 
 // Use relative path for API calls - Vercel rewrites will handle routing to backend
@@ -16,6 +17,11 @@ export const apiClient: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true, // Important for cookies
+  paramsSerializer: {
+    serialize: (params) => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
+  }
 });
 
 /**

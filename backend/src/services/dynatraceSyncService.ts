@@ -203,29 +203,27 @@ class DynatraceSyncService {
         dynatraceService.transformProblem(p)
       );
 
-      // 5b. SRE Enrichment (New Phase)
-      logger.info('[SYNC] Phase 3b: SRE Enrichment (FP Detection & Correlation)...');
+      // 5b. SRE Enrichment (FP Detection)
+      logger.info('[SYNC] Phase 3b: SRE Enrichment (FP Detection)...');
       try {
         const { default: fpService } = await import('./falsePositiveDetectionService');
-        // const { default: correlationService } = await import('./correlationService'); // Optional: Enable if performance allows
-
-        transformedProblems = await Promise.all(transformedProblems.map(async (prob) => {
-          // Detect False Positives
-          // @ts-ignore - Problem type compatibility
-          const fpAnalysis = await fpService.analyzeProblem(prob);
+        
+        transformedProblems = transformedProblems.map((prob) => {
+          const fpAnalysis = fpService.analyzeProblem(prob);
           
           return {
             ...prob,
             isFalsePositive: fpAnalysis.isFalsePositive,
             falsePositiveScore: fpAnalysis.score,
             falsePositiveReason: fpAnalysis.reasons.join('; '),
-            category: prob.title.includes('Failure') ? 'ERROR_RATE' : 'AVAILABILITY', // Simple categorization
-            // correlation: ... (would go here)
+            classification: fpAnalysis.classification,
           };
-        }));
+        });
+        
+        logger.info(`[SYNC] SRE Enrichment complete for ${transformedProblems.length} problems`);
       } catch (err: any) { 
         logger.error(`[SYNC] SRE Enrichment failed: ${err.message}`);
-        // Continue without enrichment if fails
+        // Continue without enrichment if fails to avoid stopping ingestion
       }
 
       // 6. Upsert to MongoDB

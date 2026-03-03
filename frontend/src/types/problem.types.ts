@@ -115,6 +115,8 @@ export interface ProblemFilters {
   funcionoAutoRemediacion?: boolean | null;
   evidenceType?: string[];
   search?: string;
+  squads?: string[];
+  tribes?: string[];
 }
 
 export interface PaginatedProblemsResponse {
@@ -144,4 +146,6 @@ export interface FilterOptions {
   entityTypes: string[];
   evidenceTypes: string[];
   tags: string[];
+  squads: Array<{ _id: string; name: string; tagValue: string }>;
+  tribes: Array<{ _id: string; name: string; tagValue: string }>;
 }

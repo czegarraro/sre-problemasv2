@@ -17,6 +17,7 @@ import Spinner from '@/components/ui/Spinner';
 
 import ProblemsAnalyzerV2 from '@/components/charts/ProblemsAnalyzerV2';
 import { formatDuration } from '@/lib/utils/date.utils';
+import SquadFilter from '@/components/ui/SquadFilter';
 
 const DashboardPage: React.FC = () => {
   const { filters } = useFiltersStore();
@@ -120,9 +121,14 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gradient">Dashboard Overview</h1>
-        <p className="text-muted-foreground mt-1">Real-time monitoring and analytics</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gradient">Dashboard Overview</h1>
+          <p className="text-muted-foreground mt-1">Real-time monitoring and analytics</p>
+        </div>
+        <div className="flex items-center gap-4">
+          <SquadFilter />
+        </div>
       </div>
 
       {/* KPI Cards */}

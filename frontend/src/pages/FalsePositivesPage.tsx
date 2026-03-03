@@ -3,7 +3,9 @@
  * Main dashboard showing FP metrics, distributions, and recommendations
  */
 import React, { useEffect, useState } from 'react';
-import { falsePositivesApi, FPSummary, FPAnalysisFilters } from '@/lib/api/false-positives.api';
+import { falsePositivesApi, FPSummary, FPAnalysisFilters, Phase25Summary, ChronicOffender } from '@/lib/api/false-positives.api';
+import ChronicOffendersCard from '@/components/dashboard/ChronicOffendersCard';
+import Phase25SummaryCard from '@/components/dashboard/Phase25SummaryCard';
 import { analyticsApi } from '@/lib/api/analytics.api';
 import { useFiltersStore } from '@/store/filtersStore';
 import Card, { CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -94,6 +96,8 @@ const FalsePositivesPage: React.FC = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [topEntities, setTopEntities] = useState<any>(null);
   const [kpis, setKpis] = useState<any>(null);
+  const [phase25Data, setPhase25Data] = useState<Phase25Summary | null>(null);
+  const [chronicOffenders, setChronicOffenders] = useState<ChronicOffender[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -111,14 +115,18 @@ const FalsePositivesPage: React.FC = () => {
           severityLevels: filters.severityLevel,
         };
         
-        const [response, entitiesRes, kpisRes] = await Promise.all([
+        const [response, entitiesRes, kpisRes, phase25Res, offendersRes] = await Promise.all([
           falsePositivesApi.getSummary(apiFilters),
           analyticsApi.getTopEntities(10, apiFilters),
           analyticsApi.getKPIs(apiFilters),
+          falsePositivesApi.getPhase25Summary().catch(() => ({ data: null })),
+          falsePositivesApi.getChronicOffenders(10).catch(() => ({ data: [] })),
         ]);
         setData(response);
         setTopEntities(entitiesRes);
         setKpis(kpisRes);
+        setPhase25Data(phase25Res?.data || null);
+        setChronicOffenders(offendersRes?.data || []);
       } catch (err) {
         console.error('Failed to fetch FP analysis:', err);
         setError('Error al cargar el análisis de falsos positivos');
@@ -236,6 +244,21 @@ const FalsePositivesPage: React.FC = () => {
         <ClassificationBadge type="FALSE_POSITIVE" count={summary.falsePositives || 0} />
         <ClassificationBadge type="TRUE_POSITIVE" count={summary.truePositives || 0} />
         <ClassificationBadge type="UNCERTAIN" count={summary.uncertain || 0} />
+      </div>
+
+      {/* ============================================================================
+          PHASE 2.5: ADVANCED SRE HEURISTICS SECTION
+          ============================================================================ */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Phase25SummaryCard 
+          data={phase25Data} 
+          isLoading={isLoading} 
+        />
+        <ChronicOffendersCard 
+          offenders={chronicOffenders} 
+          isLoading={isLoading}
+          windowHours={24} 
+        />
       </div>
 
       {/* Charts Row */}

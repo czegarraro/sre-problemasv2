@@ -15,9 +15,12 @@ interface FiltersState {
   clearFilter: (key: keyof ProblemFilters) => void;
   getActiveFilterCount: () => number;
   resetToDefaultFilters: () => void;
+  setTribes: (tribes: string[]) => void; // Added setTribes action
 }
 
-const getDefaultFilters = (): ProblemFilters => ({});
+const getDefaultFilters = (): ProblemFilters => ({
+  tribes: [], // Added tribes to default filters
+});
 
 // Start with empty filters
 const initialFilters: ProblemFilters = getDefaultFilters();
@@ -50,6 +53,12 @@ export const useFiltersStore = create<FiltersState>()(
           delete newFilters[key];
           return { filters: newFilters };
         });
+      },
+
+      setTribes: (tribes) => {
+        set((state) => ({
+          filters: { ...state.filters, tribes },
+        }));
       },
 
       resetToDefaultFilters: () => {

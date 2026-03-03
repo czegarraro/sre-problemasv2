@@ -161,4 +161,32 @@ router.get('/thresholds', falsePositiveController.getThresholds);
  */
 router.put('/thresholds', falsePositiveController.updateThresholds);
 
+// =============================================================================
+// PHASE 2.5: ADVANCED SRE HEURISTICS ROUTES
+// =============================================================================
+
+/**
+ * @route   GET /api/v1/analytics/false-positives/chronic-offenders
+ * @desc    Get top flapping entities (>3 alerts/24h)
+ * @query   limit (default: 10)
+ * @access  Public
+ */
+router.get('/chronic-offenders', falsePositiveController.getChronicOffenders);
+
+/**
+ * @route   GET /api/v1/analytics/false-positives/phase25-summary
+ * @desc    Get Phase 2.5 summary (flapping + maintenance stats)
+ * @access  Public
+ */
+router.get('/phase25-summary', falsePositiveController.getPhase25Summary);
+
+/**
+ * @route   GET /api/v1/analytics/false-positives/maintenance-alerts
+ * @desc    Get count of alerts during maintenance windows
+ * @query   days (default: 30)
+ * @access  Public
+ */
+router.get('/maintenance-alerts', falsePositiveController.getMaintenanceAlerts);
+
 export default router;
+

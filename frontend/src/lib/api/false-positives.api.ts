@@ -199,6 +199,80 @@ export const falsePositivesApi = {
     });
     return response as any;
   },
+
+  // ============================================================================
+  // PHASE 2.5: ADVANCED SRE HEURISTICS
+  // ============================================================================
+
+  /**
+   * Get chronic offenders (entities with >3 alerts in 24h)
+   */
+  getChronicOffenders: async (limit: number = 10): Promise<ChronicOffendersResponse> => {
+    const response = await apiClient.get('/analytics/false-positives/chronic-offenders', {
+      params: { limit },
+    });
+    return response as unknown as ChronicOffendersResponse;
+  },
+
+  /**
+   * Get Phase 2.5 summary (flapping + maintenance stats)
+   */
+  getPhase25Summary: async (): Promise<Phase25SummaryResponse> => {
+    const response = await apiClient.get('/analytics/false-positives/phase25-summary');
+    return response as unknown as Phase25SummaryResponse;
+  },
+
+  /**
+   * Get maintenance window alerts count
+   */
+  getMaintenanceAlerts: async (days: number = 30): Promise<MaintenanceAlertsResponse> => {
+    const response = await apiClient.get('/analytics/false-positives/maintenance-alerts', {
+      params: { days },
+    });
+    return response as unknown as MaintenanceAlertsResponse;
+  },
 };
 
+// ============================================================================
+// PHASE 2.5 INTERFACES
+// ============================================================================
+
+export interface ChronicOffender {
+  entityId: string;
+  entityName: string;
+  alertCount: number;
+  lastTitle: string;
+  lastOccurrence: string;
+  isFlapping: boolean;
+}
+
+export interface ChronicOffendersResponse {
+  success: boolean;
+  data: ChronicOffender[];
+  count: number;
+  windowHours: number;
+}
+
+export interface Phase25Summary {
+  chronicOffenders: ChronicOffender[];
+  maintenanceWindowAlerts: number;
+  flappingEntityCount: number;
+  maintenanceNoisePercent: number;
+}
+
+export interface Phase25SummaryResponse {
+  success: boolean;
+  data: Phase25Summary;
+}
+
+export interface MaintenanceAlertsResponse {
+  success: boolean;
+  data: {
+    maintenanceWindowAlerts: number;
+    periodDays: number;
+    maintenanceWindow: string;
+  };
+}
+
 export default falsePositivesApi;
+

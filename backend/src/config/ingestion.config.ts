@@ -42,7 +42,7 @@ export const ingestionConfig: IngestionConfig = {
   retentionDays: parseInt(process.env.INGESTION_RETENTION_DAYS || "90"),
 
   // Limits
-  maxProblemsPerRun: parseInt(process.env.INGESTION_MAX_PROBLEMS || "500"),
+  maxProblemsPerRun: parseInt(process.env.INGESTION_MAX_PROBLEMS || "50000"),
   maxConcurrentRequests: parseInt(process.env.INGESTION_MAX_CONCURRENT || "5"),
 
   // Storage (100 GB maximum)

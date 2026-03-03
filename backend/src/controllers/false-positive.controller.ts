@@ -519,6 +519,81 @@ export class FalsePositiveController {
   };
 
   // ===========================================================================
+  // PHASE 2.5: ADVANCED SRE HEURISTICS ENDPOINTS
+  // ===========================================================================
+
+  /**
+   * GET /api/v1/analytics/false-positives/chronic-offenders
+   * Get top flapping entities (>3 alerts in 24h)
+   */
+  getChronicOffenders = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { chronicOffendersService } = await import('../services/chronicOffenders.service');
+      const db = database.getDb();
+      chronicOffendersService.setCollection(db);
+      
+      const limit = parseInt(req.query.limit as string) || 10;
+      const offenders = await chronicOffendersService.getChronicOffenders(limit);
+      
+      res.json({
+        success: true,
+        data: offenders,
+        count: offenders.length,
+        windowHours: 24
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * GET /api/v1/analytics/false-positives/phase25-summary
+   * Get Phase 2.5 summary (flapping + maintenance stats)
+   */
+  getPhase25Summary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { chronicOffendersService } = await import('../services/chronicOffenders.service');
+      const db = database.getDb();
+      chronicOffendersService.setCollection(db);
+      
+      const summary = await chronicOffendersService.getPhase25Summary();
+      
+      res.json({
+        success: true,
+        data: summary
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * GET /api/v1/analytics/false-positives/maintenance-alerts
+   * Get count of alerts during maintenance windows
+   */
+  getMaintenanceAlerts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { chronicOffendersService } = await import('../services/chronicOffenders.service');
+      const db = database.getDb();
+      chronicOffendersService.setCollection(db);
+      
+      const days = parseInt(req.query.days as string) || 30;
+      const count = await chronicOffendersService.getMaintenanceWindowAlertCount(days);
+      
+      res.json({
+        success: true,
+        data: {
+          maintenanceWindowAlerts: count,
+          periodDays: days,
+          maintenanceWindow: '02:00-05:00 (America/Lima)'
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // ===========================================================================
   // HELPER METHODS
   // ===========================================================================
 

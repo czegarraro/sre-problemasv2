@@ -1,0 +1,1749 @@
+{
+  "_id": "697700cfa68066ca4cd8e722",
+  "dynatraceId": "8603906740944662007_1769405220018V2",
+  "affectedEntities": [
+    {
+      "entityId": {
+        "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+        "type": "PROCESS_GROUP_INSTANCE"
+      },
+      "name": "systemd"
+    }
+  ],
+  "createdAt": "2026-01-26T05:51:04.132Z",
+  "displayId": "P-26018353",
+  "duration": 15,
+  "endTime": "2026-01-26T05:28:00.150Z",
+  "evidenceDetails": {
+    "totalCount": 17,
+    "details": [
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-1956334748012306608_1769404380564",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "-1956334748012306608_1769404380564",
+          "startTime": 1769404380564,
+          "endTime": 1769404381709,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2908551}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2908551}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404380564,
+        "endTime": 1769404381709
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "2841120955635709170_1769404380564",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "2841120955635709170_1769404380564",
+          "startTime": 1769404380564,
+          "endTime": 1769404381579,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2908525}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2908525}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404380564,
+        "endTime": 1769404381579
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "7013156765482609630_1769405220019",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "7013156765482609630_1769405220019",
+          "startTime": 1769405220019,
+          "endTime": 1769405223301,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2912115}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2912115}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769405220019,
+        "endTime": 1769405223301
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-7356635124674101197_1769404920106",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "-7356635124674101197_1769404920106",
+          "startTime": 1769404920106,
+          "endTime": 1769404920106,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404920106,
+        "endTime": 1769404920106
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-8775616105422663957_1769404860106",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "-8775616105422663957_1769404860106",
+          "startTime": 1769404860106,
+          "endTime": 1769404860106,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404860106,
+        "endTime": 1769404860106
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "6771892909249528863_1769404860107",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "6771892909249528863_1769404860107",
+          "startTime": 1769404860107,
+          "endTime": 1769404862899,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2910637}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2910637}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404860107,
+        "endTime": 1769404862899
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-307161494860089518_1769405280151",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "-307161494860089518_1769405280151",
+          "startTime": 1769405280151,
+          "endTime": 1769405283267,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2912259}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2912259}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769405280151,
+        "endTime": 1769405283267
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-1153001989803433680_1769404980031",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "-1153001989803433680_1769404980031",
+          "startTime": 1769404980031,
+          "endTime": 1769404980031,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404980031,
+        "endTime": 1769404980031
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-5529628283882772008_1769404259846",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "-5529628283882772008_1769404259846",
+          "startTime": 1769404259846,
+          "endTime": 1769404263078,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2908309}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2908309}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404259846,
+        "endTime": 1769404263078
+      },
+      {
+        "evidenceType": "MAINTENANCE_WINDOW",
+        "displayName": "Mantenimiento L - V AcselX 12C",
+        "entity": {
+          "entityId": {
+            "id": "HOST-9280132EF8B40347",
+            "type": "HOST"
+          },
+          "name": "psfrmprd0100 - 172.30.8.149"
+        },
+        "groupingEntity": null,
+        "rootCauseRelevant": true,
+        "maintenanceWindowConfigId": "389bbe8c-02ca-36b2-ad24-39a48a78a0eb",
+        "startTime": 1677884400000,
+        "endTime": 1835874000000
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "5693226248525881120_1769404080396",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "5693226248525881120_1769404080396",
+          "startTime": 1769404080396,
+          "endTime": 1769404081843,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2907133}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2907133}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404080396,
+        "endTime": 1769404081843
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-2926473489402668826_1769404380563",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "-2926473489402668826_1769404380563",
+          "startTime": 1769404380563,
+          "endTime": 1769404380563,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404380563,
+        "endTime": 1769404380563
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "364676394787850081_1769404980033",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "364676394787850081_1769404980033",
+          "startTime": 1769404980033,
+          "endTime": 1769404982941,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2910989}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2910989}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404980033,
+        "endTime": 1769404982941
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "5767484499644251540_1769404920107",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "5767484499644251540_1769404920107",
+          "startTime": 1769404920107,
+          "endTime": 1769404923187,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2910801}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2910801}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404920107,
+        "endTime": 1769404923187
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process systemd has crashed",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "-659017232316468320_1769404920107",
+        "eventType": "PGI_CRASHED_INFO",
+        "data": {
+          "eventId": "-659017232316468320_1769404920107",
+          "startTime": 1769404920107,
+          "endTime": 1769404923186,
+          "eventType": "PGI_CRASHED_INFO",
+          "title": "Process systemd has crashed",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "Crashed process executable path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed processes pids",
+              "value": "{2910772}"
+            },
+            {
+              "key": "Crashed_process_executable_path",
+              "value": "/usr/libexec/tracker-extract"
+            },
+            {
+              "key": "Crashed_processes_pids",
+              "value": "{2910772}"
+            },
+            {
+              "key": "dt.entity.host",
+              "value": "HOST-9280132EF8B40347"
+            },
+            {
+              "key": "dt.entity.host_group",
+              "value": "HOST_GROUP-4CCDE9B370924C5D"
+            },
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd crashed with status \"Segmentation fault\""
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process crashed"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            },
+            {
+              "key": "dt.event.title",
+              "value": "Process systemd has crashed"
+            },
+            {
+              "key": "dt.host_group.id",
+              "value": "ORACLE_FUSION_SERVICE"
+            },
+            {
+              "key": "host.name",
+              "value": "psfrmprd0100.pps.com.pe"
+            }
+          ],
+          "status": "CLOSED",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769404920107,
+        "endTime": 1769404923186
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "2476008158861942207_1769405280150",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "2476008158861942207_1769405280150",
+          "startTime": 1769405280150,
+          "endTime": 1769405280150,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769405280150,
+        "endTime": 1769405280150
+      },
+      {
+        "evidenceType": "EVENT",
+        "displayName": "Process unavailable",
+        "entity": {
+          "entityId": {
+            "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+            "type": "PROCESS_GROUP_INSTANCE"
+          },
+          "name": "systemd"
+        },
+        "groupingEntity": {
+          "entityId": {
+            "id": "PROCESS_GROUP-21AE479490296C71",
+            "type": "PROCESS_GROUP"
+          },
+          "name": "systemd"
+        },
+        "rootCauseRelevant": true,
+        "eventId": "8603906740944662007_1769405220018",
+        "eventType": "PGI_UNAVAILABLE",
+        "data": {
+          "eventId": "8603906740944662007_1769405220018",
+          "startTime": 1769405220018,
+          "endTime": 1769405220018,
+          "eventType": "PGI_UNAVAILABLE",
+          "title": "Process unavailable",
+          "entityId": {
+            "entityId": {
+              "id": "PROCESS_GROUP_INSTANCE-DBF11E7D3D1852C4",
+              "type": "PROCESS_GROUP_INSTANCE"
+            },
+            "name": "systemd"
+          },
+          "properties": [
+            {
+              "key": "dt.event.description",
+              "value": "Process systemd on host psfrmprd0100 - 172.30.8.149 has crashed with status Segmentation fault"
+            },
+            {
+              "key": "dt.event.group_label",
+              "value": "Process unavailable"
+            },
+            {
+              "key": "dt.event.impact_level",
+              "value": "Infrastructure"
+            },
+            {
+              "key": "dt.event.is_rootcause_relevant",
+              "value": "true"
+            },
+            {
+              "key": "dt.event.timeout",
+              "value": "0"
+            }
+          ],
+          "status": "CLOSED",
+          "correlationId": "7525722f4324f1a5",
+          "entityTags": [
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-squad",
+              "value": "pendiente",
+              "stringRepresentation": "tn-squad:pendiente"
+            },
+            {
+              "context": "CONTEXTLESS",
+              "key": "tn-tribu",
+              "value": "pendiente",
+              "stringRepresentation": "tn-tribu:pendiente"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "-4479850986691414280",
+              "name": "DRP_2023"
+            }
+          ],
+          "underMaintenance": false,
+          "suppressAlert": false,
+          "suppressProblem": false,
+          "frequentEvent": false
+        },
+        "startTime": 1769405220018,
+        "endTime": 1769405220018
+      }
+    ]
+  },
+  "impactLevel": "INFRASTRUCTURE",
+  "lastSyncAt": "2026-01-26T05:51:04.132Z",
+  "managementZones": [
+    {
+      "id": "-4479850986691414280",
+      "name": "DRP_2023"
+    }
+  ],
+  "recentComments": {
+    "totalCount": 0,
+    "comments": []
+  },
+  "rootCauseEntity": {
+    "entityId": {
+      "id": "PROCESS_GROUP-21AE479490296C71",
+      "type": "PROCESS_GROUP"
+    },
+    "name": "systemd"
+  },
+  "severityLevel": "AVAILABILITY",
+  "startTime": "2026-01-26T05:13:00.563Z",
+  "status": "CLOSED",
+  "syncCount": 1,
+  "syncStatus": "SYNCED",
+  "title": "Process unavailable",
+  "category": "AVAILABILITY",
+  "falsePositiveReason": "",
+  "falsePositiveScore": 0,
+  "isFalsePositive": false,
+  "classification": "VALID_INCIDENT",
+  "isFlapping": false,
+  "isMaintenanceWindow": false,
+  "maintenanceReason": null,
+  "entityTags": [
+    {
+      "key": "tn-squad",
+      "value": "thewhitestripes",
+      "context": "CONTEXTLESS",
+      "stringRepresentation": "tn-squad:thewhitestripes"
+    }
+  ]
+}

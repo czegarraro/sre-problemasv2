@@ -200,6 +200,32 @@ export const getAutoremediadoDistribution = async (req: Request, res: Response, 
 };
 
 /**
+ * Get squad distribution (doughnut chart)
+ */
+export const getSquadDistribution = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const filters = parseFilters(req.query);
+    const data = await getAnalyticsService().getSquadDistribution(filters);
+    sendSuccess(res, data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Get tribe distribution (doughnut chart)
+ */
+export const getTribeDistribution = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const filters = parseFilters(req.query);
+    const data = await getAnalyticsService().getTribeDistribution(filters);
+    sendSuccess(res, data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Get autoremediation time series
  */
 export const getAutoremediationTimeSeries = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

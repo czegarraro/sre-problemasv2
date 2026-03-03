@@ -137,6 +137,26 @@ export const analyticsApi = {
   },
 
   /**
+   * Get squad distribution (doughnut chart)
+   */
+  getSquadDistribution: async (filters?: ProblemFilters) => {
+    const response = await apiClient.get<ApiResponse<any>>('/analytics/squad-distribution', {
+      params: filters,
+    });
+    return (response as any).data;
+  },
+
+  /**
+   * Get tribe distribution (doughnut chart)
+   */
+  getTribeDistribution: async (filters?: ProblemFilters) => {
+    const response = await apiClient.get<ApiResponse<any>>('/analytics/tribe-distribution', {
+      params: filters,
+    });
+    return (response as any).data;
+  },
+
+  /**
    * Get autoremediado distribution (pie chart)
    */
   getAutoremediadoDistribution: async (filters?: ProblemFilters) => {

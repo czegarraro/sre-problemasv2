@@ -46,6 +46,18 @@ export const parseFilters = (query: any): ProblemFilters => {
       : [query.entityTags];
   }
 
+  if (query.squads) {
+    filters.squads = Array.isArray(query.squads) 
+      ? query.squads 
+      : [query.squads];
+  }
+
+  if (query.tribes) {
+    filters.tribes = Array.isArray(query.tribes) 
+      ? query.tribes 
+      : [query.tribes];
+  }
+
   if (query.evidenceType) {
     filters.evidenceType = Array.isArray(query.evidenceType) 
       ? query.evidenceType 

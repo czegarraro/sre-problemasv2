@@ -102,74 +102,33 @@ export class FalsePositiveService {
       match['managementZones.name'] = { $in: managementZones };
     }
 
-    // Aggregation pipeline to calculate all summary metrics in MongoDB
+    // Aggregation pipeline using pre-calculated fields (Ingestion-time enrichment)
     const pipeline = [
       ...(Object.keys(match).length > 0 ? [{ $match: match }] : []),
-      {
-        $addFields: {
-          // Calculate FP score directly in MongoDB
-          fpScore: {
-            $add: [
-              // Duration score
-              { $cond: [{ $lt: [{ $ifNull: ['$duration', 0] }, 5] }, 0.35, 
-                { $cond: [{ $lt: [{ $ifNull: ['$duration', 0] }, 15] }, 0.20, 
-                  { $cond: [{ $lt: [{ $ifNull: ['$duration', 0] }, 60] }, 0.10, 0] }] }] },
-              // Auto-remediation score
-              { $cond: [
-                { $and: [
-                  { $in: [{ $toLower: { $toString: { $ifNull: ['$Autoremediado', ''] } } }, ['si', 'sí', 'yes', 'true', '1']] },
-                  { $in: [{ $toLower: { $toString: { $ifNull: ['$FuncionoAutoRemediacion', ''] } } }, ['si', 'sí', 'yes', 'true', '1']] }
-                ]},
-                0.25,
-                { $cond: [
-                  { $in: [{ $toLower: { $toString: { $ifNull: ['$Autoremediado', ''] } } }, ['si', 'sí', 'yes', 'true', '1']] },
-                  0.10,
-                  0
-                ]}
-              ]},
-              // Low severity score
-              { $cond: [{ $in: ['$severityLevel', ['RESOURCE_CONTENTION', 'PERFORMANCE']] }, 0.10, 0] },
-              // No comments score
-              { $cond: [{ $eq: [{ $ifNull: ['$recentComments.totalCount', 0] }, 0] }, 0.05, 0] }
-            ]
-          },
-          // Duration category
-          durationCategory: {
-            $switch: {
-              branches: [
-                { case: { $lt: [{ $ifNull: ['$duration', 0] }, 5] }, then: '<5min' },
-                { case: { $lt: [{ $ifNull: ['$duration', 0] }, 15] }, then: '5-15min' },
-                { case: { $lt: [{ $ifNull: ['$duration', 0] }, 60] }, then: '15-60min' },
-                { case: { $lt: [{ $ifNull: ['$duration', 0] }, 240] }, then: '1-4h' }
-              ],
-              default: '>4h'
-            }
-          },
-          isAutoRemediated: {
-            $in: [{ $toLower: { $toString: { $ifNull: ['$Autoremediado', ''] } } }, ['si', 'sí', 'yes', 'true', '1']]
-          }
-        }
-      },
       {
         $group: {
           _id: null,
           totalProblems: { $sum: 1 },
-          // Classification counts
-          falsePositives: { $sum: { $cond: [{ $gte: ['$fpScore', 0.6] }, 1, 0] } },
-          truePositives: { $sum: { $cond: [{ $lt: ['$fpScore', 0.3] }, 1, 0] } },
-          uncertain: { $sum: { $cond: [{ $and: [{ $gte: ['$fpScore', 0.3] }, { $lt: ['$fpScore', 0.6] }] }, 1, 0] } },
+          
+          // Classification counts from stored fields
+          falsePositives: { $sum: { $cond: [{ $eq: ['$classification', 'NOISE'] }, 1, 0] } }, // Map NOISE to FP
+          truePositives: { $sum: { $cond: [{ $eq: ['$classification', 'VALID_INCIDENT'] }, 1, 0] } },
+          uncertain: { $sum: { $cond: [{ $in: ['$classification', ['LOW_IMPACT', 'TOLERABLE_PERF']] }, 1, 0] } },
+          
           // Rates
-          autoRemediated: { $sum: { $cond: ['$isAutoRemediated', 1, 0] } },
-          totalFPScore: { $sum: '$fpScore' },
+          autoRemediated: { $sum: { $cond: [{ $in: [{ $toLower: { $toString: { $ifNull: ['$Autoremediado', ''] } } }, ['si', 'sí', 'yes', 'true', '1']] }, 1, 0] } },
+          totalFPScore: { $sum: { $ifNull: ['$falsePositiveScore', 0] } },
+          
           // Date range
           minDate: { $min: '$startTime' },
           maxDate: { $max: '$startTime' },
-          // Duration distribution
-          durationLt5: { $sum: { $cond: [{ $eq: ['$durationCategory', '<5min'] }, 1, 0] } },
-          duration5to15: { $sum: { $cond: [{ $eq: ['$durationCategory', '5-15min'] }, 1, 0] } },
-          duration15to60: { $sum: { $cond: [{ $eq: ['$durationCategory', '15-60min'] }, 1, 0] } },
-          duration1to4h: { $sum: { $cond: [{ $eq: ['$durationCategory', '1-4h'] }, 1, 0] } },
-          durationGt4h: { $sum: { $cond: [{ $eq: ['$durationCategory', '>4h'] }, 1, 0] } }
+          
+          // Duration distribution (keeping calculation for robustness)
+          durationLt5: { $sum: { $cond: [{ $lt: [{ $ifNull: ['$duration', 0] }, 5] }, 1, 0] } },
+          duration5to15: { $sum: { $cond: [{ $and: [{ $gte: ['$duration', 5] }, { $lt: ['$duration', 15] }] }, 1, 0] } },
+          duration15to60: { $sum: { $cond: [{ $and: [{ $gte: ['$duration', 15] }, { $lt: ['$duration', 60] }] }, 1, 0] } },
+          duration1to4h: { $sum: { $cond: [{ $and: [{ $gte: ['$duration', 60] }, { $lt: ['$duration', 240] }] }, 1, 0] } },
+          durationGt4h: { $sum: { $cond: [{ $gte: ['$duration', 240] }, 1, 0] } }
         }
       }
     ];
@@ -677,8 +636,8 @@ export class FalsePositiveService {
       query['affectedEntities.entityId.type'] = { $in: request.entityTypes };
     }
 
-    // Fetch problems - DEFAULT LIMIT to 10000 for comprehensive analysis
-    const limit = request.limit || 10000;
+    // Fetch problems - DEFAULT LIMIT to 30000 for comprehensive analysis
+    const limit = request.limit || 30000;
     const problems = await this.collection
       .find(query)
       .sort({ startTime: -1 })  // Most recent first

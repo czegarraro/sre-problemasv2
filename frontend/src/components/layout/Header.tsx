@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { LogOut, User, Activity, BarChart3, AlertCircle, AlertTriangle, Clock } from 'lucide-react';
+import { LogOut, User, Activity, BarChart3, AlertCircle, AlertTriangle, Clock, Zap } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
@@ -82,6 +82,19 @@ const Header: React.FC = () => {
           >
             <AlertTriangle className="w-4 h-4" />
             <span className="text-sm font-medium">FP Analysis</span>
+          </Link>
+
+          <Link
+            to="/automation"
+            className={cn(
+              'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors',
+              location.pathname === '/automation'
+                ? 'bg-emerald-500/20 text-emerald-400'
+                : 'hover:bg-white/5 text-muted-foreground'
+            )}
+          >
+            <Zap className="w-4 h-4" />
+            <span className="text-sm font-medium">Automation</span>
           </Link>
           
           <Link
