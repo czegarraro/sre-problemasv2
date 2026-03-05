@@ -79,5 +79,8 @@ router.get('/avg-resolution-timeseries', analyticsController.getAverageResolutio
 // GET /api/v1/analytics/problems-hierarchy
 router.get('/problems-hierarchy', analyticsController.getProblemsHierarchy);
 
+// GET /api/v1/analytics/cascading-filter-options
+router.get('/cascading-filter-options', analyticsController.getCascadingFilterOptions);
+
 export default router;
 

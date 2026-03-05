@@ -278,3 +278,16 @@ export const getProblemsHierarchy = async (req: Request, res: Response, next: Ne
     next(error);
   }
 };
+
+/**
+ * Get cascading filter options (squads/tribes/cloudApps filtered by active selections)
+ */
+export const getCascadingFilterOptions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const filters = parseFilters(req.query);
+    const data = await getAnalyticsService().getCascadingFilterOptions(filters);
+    sendSuccess(res, data);
+  } catch (error) {
+    next(error);
+  }
+};

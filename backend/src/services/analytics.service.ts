@@ -1296,4 +1296,75 @@ export class AnalyticsService {
       }
     };
   }
+
+  /**
+   * Get cascading filter options: returns distinct squads, tribes, and cloud apps
+   * filtered by the currently active parent filters.
+   * This enables dependent dropdowns (e.g. selecting a tribe filters squads).
+   */
+  async getCascadingFilterOptions(filters?: ProblemFilters) {
+    const collection = this.getCollection();
+    const match = this.buildMatchStage(filters);
+
+    // Build aggregation pipeline using $facet for efficiency (single DB call)
+    const pipeline: Document[] = [
+      { $match: match },
+      {
+        $facet: {
+          // Extract distinct squads from entityTags + evidenceDetails
+          squads: [
+            {
+              $project: {
+                squadTag: {
+                  $filter: {
+                    input: { $ifNull: ['$entityTags', []] },
+                    as: 'tag',
+                    cond: { $eq: ['$$tag.key', 'tn-squad'] }
+                  }
+                }
+              }
+            },
+            { $unwind: { path: '$squadTag', preserveNullAndEmptyArrays: false } },
+            { $group: { _id: '$squadTag.value', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $project: { _id: 0, name: '$_id', tagValue: '$_id', problemCount: '$count' } }
+          ],
+          // Extract distinct tribes from entityTags
+          tribes: [
+            {
+              $project: {
+                tribeTag: {
+                  $filter: {
+                    input: { $ifNull: ['$entityTags', []] },
+                    as: 'tag',
+                    cond: { $eq: ['$$tag.key', 'tn-tribu'] }
+                  }
+                }
+              }
+            },
+            { $unwind: { path: '$tribeTag', preserveNullAndEmptyArrays: false } },
+            { $group: { _id: '$tribeTag.value', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $project: { _id: 0, name: '$_id', tagValue: '$_id', problemCount: '$count' } }
+          ],
+          // Extract distinct mz-aks cloud apps from managementZones
+          cloudApps: [
+            { $unwind: { path: '$managementZones', preserveNullAndEmptyArrays: false } },
+            { $match: { 'managementZones.name': { $regex: 'mz-aks', $options: 'i' } } },
+            { $group: { _id: '$managementZones.name', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $project: { _id: 0, name: '$_id', problemCount: '$count' } }
+          ]
+        }
+      }
+    ];
+
+    const [result] = await collection.aggregate(pipeline).toArray();
+
+    return {
+      squads: result?.squads || [],
+      tribes: result?.tribes || [],
+      cloudApps: result?.cloudApps || [],
+    };
+  }
 }

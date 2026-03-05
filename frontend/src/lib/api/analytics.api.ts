@@ -205,4 +205,14 @@ export const analyticsApi = {
     });
     return (response as any).data;
   },
+
+  /**
+   * Get cascading filter options (squads/tribes/cloudApps filtered by active selections)
+   */
+  getCascadingFilterOptions: async (filters?: Partial<ProblemFilters>) => {
+    const response = await apiClient.get<ApiResponse<any>>('/analytics/cascading-filter-options', {
+      params: filters,
+    });
+    return (response as any).data;
+  },
 };

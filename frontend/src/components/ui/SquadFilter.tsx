@@ -1,18 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useFiltersStore } from '@/store/filtersStore';
-import { squadsApi, Squad } from '@/services/squadsApi';
+import { analyticsApi } from '@/lib/api/analytics.api';
 
 const SquadFilter: React.FC = () => {
   const { filters, setFilter } = useFiltersStore();
-  const [squads, setSquads] = useState<Squad[]>([]);
+  const [squads, setSquads] = useState<{ name: string; tagValue: string; problemCount: number }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Re-fetch squads when cloud app OR tribe changes (cascading: CloudApp → Tribe → Squad)
   useEffect(() => {
     const fetchSquads = async () => {
       setIsLoading(true);
       try {
-        const data = await squadsApi.getSquads();
-        setSquads(data);
+        // Pass managementZones and tribes as parent filters
+        const parentFilters: any = {};
+        if (filters.managementZones && filters.managementZones.length > 0) {
+          parentFilters.managementZones = filters.managementZones;
+        }
+        if (filters.tribes && filters.tribes.length > 0) {
+          parentFilters.tribes = filters.tribes;
+        }
+
+        const data = await analyticsApi.getCascadingFilterOptions(parentFilters);
+        setSquads(data.squads || []);
+
+        // If the currently selected squad is no longer in the options, reset it
+        if (filters.squads && filters.squads.length > 0) {
+          const currentSquad = filters.squads[0];
+          const stillValid = (data.squads || []).some((s: any) => s.tagValue === currentSquad);
+          if (!stillValid && currentSquad !== 'UNASSIGNED') {
+            setFilter('squads', undefined);
+          }
+        }
       } catch (error) {
         console.error('Error fetching squads:', error);
       } finally {
@@ -21,12 +40,11 @@ const SquadFilter: React.FC = () => {
     };
 
     fetchSquads();
-  }, []);
+  }, [filters.managementZones, filters.tribes]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === 'all') {
-      // Si queremos "Todos", limpiamos el filtro de squads o lo manejamos según la lógica de la app
       setFilter('squads', undefined);
     } else {
       setFilter('squads', [value]);
@@ -51,11 +69,11 @@ const SquadFilter: React.FC = () => {
         <option value="UNASSIGNED" className="bg-slate-900 text-white text-sm font-semibold">Sin Squad</option>
         {squads.map((squad) => (
           <option 
-            key={squad._id} 
+            key={squad.tagValue} 
             value={squad.tagValue} 
             className="bg-slate-900 text-white text-sm"
           >
-            {squad.name}
+            {squad.name} ({squad.problemCount})
           </option>
         ))}
       </select>

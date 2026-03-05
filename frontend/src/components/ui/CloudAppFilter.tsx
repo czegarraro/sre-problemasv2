@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useFiltersStore } from '@/store/filtersStore';
-import { filtersApi } from '@/services/filtersApi';
+import { analyticsApi } from '@/lib/api/analytics.api';
 
 const CloudAppFilter: React.FC = () => {
   const { filters, setFilter } = useFiltersStore();
-  const [cloudApps, setCloudApps] = useState<string[]>([]);
+  const [cloudApps, setCloudApps] = useState<{ name: string; problemCount: number }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Re-fetch cloud apps when tribes or squads change (cascading UP)
   useEffect(() => {
     const fetchCloudApps = async () => {
       setIsLoading(true);
       try {
-        const data = await filtersApi.getOptions();
-        // Filtrar específicamente aquellas que contengan mz-aks
-        const mzApps = (data.managementZones || []).filter(mz => 
-          mz.toLowerCase().includes('mz-aks')
-        );
-        setCloudApps(mzApps.sort());
+        // Pass tribes and squads as parent filters to get only relevant cloud apps
+        const parentFilters: any = {};
+        if (filters.tribes && filters.tribes.length > 0) parentFilters.tribes = filters.tribes;
+        if (filters.squads && filters.squads.length > 0) parentFilters.squads = filters.squads;
+
+        const data = await analyticsApi.getCascadingFilterOptions(parentFilters);
+        setCloudApps(data.cloudApps || []);
       } catch (error) {
         console.error('Error fetching cloud apps:', error);
       } finally {
@@ -25,7 +27,7 @@ const CloudAppFilter: React.FC = () => {
     };
 
     fetchCloudApps();
-  }, []);
+  }, [filters.tribes, filters.squads]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -55,12 +57,12 @@ const CloudAppFilter: React.FC = () => {
         <option value="UNASSIGNED" className="bg-slate-900 text-white text-sm font-semibold">Sin Cloud App</option>
         {cloudApps.map((app) => (
           <option 
-            key={app} 
-            value={app} 
+            key={app.name} 
+            value={app.name} 
             className="bg-slate-900 text-white text-sm" 
-            title={app}
+            title={app.name}
           >
-            {app.length > 20 ? app.substring(0, 20) + '...' : app}
+            {app.name.length > 20 ? app.name.substring(0, 20) + '...' : app.name} ({app.problemCount})
           </option>
         ))}
       </select>
