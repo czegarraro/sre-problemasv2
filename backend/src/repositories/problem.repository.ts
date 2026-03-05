@@ -33,9 +33,25 @@ export class ProblemRepository {
       mongoFilter.status = { $in: filters.status };
     }
 
-    // Management Zones filter
+    // Management Zones filter (Cloud Apps)
     if (filters.managementZones && filters.managementZones.length > 0) {
-      mongoFilter['managementZones.name'] = { $in: filters.managementZones };
+      const specifiedZones = filters.managementZones.filter((z: string) => z !== 'UNASSIGNED');
+      const hasUnassigned = filters.managementZones.includes('UNASSIGNED');
+      
+      if (specifiedZones.length > 0 && !hasUnassigned) {
+        mongoFilter['managementZones.name'] = { $in: specifiedZones };
+      } else if (hasUnassigned && specifiedZones.length === 0) {
+        // Find problems where NONE of the management zones contain mz-aks
+        mongoFilter['managementZones.name'] = { $not: { $regex: 'mz-aks', $options: 'i' } };
+      } else if (hasUnassigned && specifiedZones.length > 0) {
+        mongoFilter.$and = mongoFilter.$and || [];
+        mongoFilter.$and.push({
+          $or: [
+            { 'managementZones.name': { $in: specifiedZones } },
+            { 'managementZones.name': { $not: { $regex: 'mz-aks', $options: 'i' } } }
+          ]
+        });
+      }
     }
 
     // Affected Entity Types filter

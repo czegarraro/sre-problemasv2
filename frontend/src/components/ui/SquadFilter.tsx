@@ -36,21 +36,25 @@ const SquadFilter: React.FC = () => {
   const currentSquad = filters.squads && filters.squads.length > 0 ? filters.squads[0] : 'all';
 
   return (
-    <div className="flex flex-col space-y-2">
-      <label htmlFor="squad-filter" className="text-xs font-medium text-muted-foreground uppercase">
-        Squad
+    <div className="flex flex-col">
+      <label htmlFor="squad-filter" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+        SQUAD
       </label>
       <select
         id="squad-filter"
         value={currentSquad}
         onChange={handleChange}
         disabled={isLoading}
-        className="bg-white/5 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none cursor-pointer"
+        className="bg-white/5 border border-white/10 text-white text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2 disabled:opacity-50"
       >
-        <option value="all" className="bg-[#1a1c2e]">Todos</option>
-        <option value="UNASSIGNED" className="bg-[#1a1c2e]">Sin Squad</option>
+        <option value="all" className="bg-slate-900 text-white text-sm font-semibold">Todos</option>
+        <option value="UNASSIGNED" className="bg-slate-900 text-white text-sm font-semibold">Sin Squad</option>
         {squads.map((squad) => (
-          <option key={squad._id} value={squad.tagValue} className="bg-[#1a1c2e]">
+          <option 
+            key={squad._id} 
+            value={squad.tagValue} 
+            className="bg-slate-900 text-white text-sm"
+          >
             {squad.name}
           </option>
         ))}

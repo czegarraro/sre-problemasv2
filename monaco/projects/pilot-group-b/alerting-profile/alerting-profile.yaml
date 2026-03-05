@@ -1,0 +1,7 @@
+- id: infra-pilot
+  config:
+    name: Infra-Pilot-Alerting-Profile
+    skip: false
+  type:
+    api: alerting-profile
+  payload: infra-pilot-alerting-profile.json

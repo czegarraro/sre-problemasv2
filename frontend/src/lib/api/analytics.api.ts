@@ -157,6 +157,16 @@ export const analyticsApi = {
   },
 
   /**
+   * Get cloud application distribution (mz-aks)
+   */
+  getCloudAppDistribution: async (filters?: ProblemFilters) => {
+    const response = await apiClient.get<ApiResponse<any>>('/analytics/cloud-app-distribution', {
+      params: filters,
+    });
+    return (response as any).data;
+  },
+
+  /**
    * Get autoremediado distribution (pie chart)
    */
   getAutoremediadoDistribution: async (filters?: ProblemFilters) => {

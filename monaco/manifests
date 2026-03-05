@@ -1,0 +1,13 @@
+manifestVersion: "1.0"
+projects:
+  - name: backup
+environmentGroups:
+  - name: default
+    environments:
+      - name: production
+        url:
+          type: environment
+          value: "DYNATRACE_URL"
+        auth:
+          token:
+            name: "DYNATRACE_TOKEN"

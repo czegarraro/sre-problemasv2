@@ -226,6 +226,19 @@ export const getTribeDistribution = async (req: Request, res: Response, next: Ne
 };
 
 /**
+ * Get cloud application distribution (Top 10 mz-aks)
+ */
+export const getCloudAppDistribution = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const filters = parseFilters(req.query);
+    const data = await getAnalyticsService().getCloudAppDistribution(filters);
+    sendSuccess(res, data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Get autoremediation time series
  */
 export const getAutoremediationTimeSeries = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

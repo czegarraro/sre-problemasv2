@@ -966,6 +966,58 @@ export class AnalyticsService {
   }
 
   /**
+   * Get Cloud Application distribution (mz-aks) using aggregation
+   */
+  async getCloudAppDistribution(filters?: ProblemFilters) {
+    const collection = this.getCollection();
+    const match = this.buildMatchStage(filters);
+
+    const pipeline = [
+      { $match: match },
+      {
+        $project: {
+          cloudAppTags: {
+            $filter: {
+              input: { $ifNull: ['$managementZones', []] },
+              as: 'mz',
+              cond: { $regexMatch: { input: { $ifNull: ['$$mz.name', ''] }, regex: 'mz-aks', options: 'i' } }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          cloudApp: {
+            $cond: [
+              { $gt: [{ $size: '$cloudAppTags' }, 0] },
+              { $arrayElemAt: ['$cloudAppTags.name', 0] },
+              'Sin Cloud App'
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$cloudApp',
+          value: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          name: { $ifNull: ['$_id', 'Sin Cloud App'] },
+          value: 1
+        }
+      },
+      { $sort: { value: -1 } },
+      { $limit: 10 }
+    ];
+
+    const data = await collection.aggregate(pipeline).toArray();
+    return { data };
+  }
+
+  /**
    * Get autoremediation time series data using aggregation
    */
   async getAutoremediationTimeSeries(granularity: 'day' | 'week' | 'month' = 'day', filters?: ProblemFilters) {

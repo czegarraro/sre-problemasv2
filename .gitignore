@@ -64,3 +64,7 @@ __pycache__/
 backend/node_modules
 frontend/node_modules
 .env
+
+# SRE Lab (local analysis tools, not for production)
+sre-lab/data-samples/
+monaco/backups/

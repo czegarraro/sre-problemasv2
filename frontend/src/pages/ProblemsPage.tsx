@@ -12,6 +12,7 @@ import { formatRelativeTime, calculateDuration, formatDuration } from '@/lib/uti
 import { formatSeverityLevel, formatImpactLevel } from '@/lib/utils/format.utils';
 import SquadFilter from '@/components/ui/SquadFilter';
 import TribeFilter from '@/components/ui/TribeFilter';
+import CloudAppFilter from '@/components/ui/CloudAppFilter';
 import ProblemsAnalyticsCharts from '@/components/charts/ProblemsAnalyticsCharts';
 import ProblemsKPIBanner from '@/components/ui/ProblemsKPIBanner';
 
@@ -41,6 +42,7 @@ const ProblemsPage: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center gap-4 bg-white/5 p-2 rounded-lg border border-white/5">
+          <CloudAppFilter />
           <TribeFilter />
           <SquadFilter />
         </div>

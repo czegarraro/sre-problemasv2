@@ -3,7 +3,6 @@ import { analyticsApi } from '@/lib/api/analytics.api';
 import { useFiltersStore } from '@/store/filtersStore';
 import Card, { CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 
-import DoughnutChart from '@/components/charts/DoughnutChart';
 import BarChart from '@/components/charts/BarChart';
 import Spinner from '@/components/ui/Spinner';
 
@@ -13,6 +12,7 @@ const ProblemsAnalyticsCharts: React.FC = () => {
 
   const [squadDistribution, setSquadDistribution] = useState<any>(null);
   const [tribeDistribution, setTribeDistribution] = useState<any>(null);
+  const [cloudAppDistribution, setCloudAppDistribution] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -22,16 +22,19 @@ const ProblemsAnalyticsCharts: React.FC = () => {
         const [
 
           squadDistRes,
-          tribeDistRes
+          tribeDistRes,
+          cloudAppDistRes
         ] = await Promise.all([
 
           analyticsApi.getSquadDistribution(filters),
-          analyticsApi.getTribeDistribution(filters)
+          analyticsApi.getTribeDistribution(filters),
+          analyticsApi.getCloudAppDistribution(filters)
         ]);
 
 
         setSquadDistribution(squadDistRes);
         setTribeDistribution(tribeDistRes);
+        setCloudAppDistribution(cloudAppDistRes);
       } catch (error) {
         console.error('Failed to fetch analytics charts data for Problems view:', error);
       } finally {
@@ -61,12 +64,27 @@ const ProblemsAnalyticsCharts: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
       
-      {/* Squad Distribution (Doughnut Chart) */}
+      {/* Cloud App Distribution (Bar Chart) */}
       <Card variant="glass" className="h-full">
         <CardHeader className="py-3">
-          <CardTitle className="text-sm text-center">Distribución por Squad</CardTitle>
+          <CardTitle className="text-sm text-center">Top 10 Cloud Applications</CardTitle>
+        </CardHeader>
+        <CardContent className="pb-4">
+          {cloudAppDistribution && (
+            <BarChart 
+              data={formatForBarChart(cloudAppDistribution.data)} 
+              height="350px"
+            />
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Squad Distribution (Bar Chart) */}
+      <Card variant="glass" className="h-full">
+        <CardHeader className="py-3">
+          <CardTitle className="text-sm text-center">Top 10 Squads (Problemas)</CardTitle>
         </CardHeader>
         <CardContent className="pb-4">
           {squadDistribution && (
@@ -78,45 +96,15 @@ const ProblemsAnalyticsCharts: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Tribe Distribution (Doughnut Chart) */}
+      {/* Tribe Distribution (Bar Chart) */}
       <Card variant="glass" className="h-full">
         <CardHeader className="py-3">
-          <CardTitle className="text-sm text-center">Distribución por Tribu</CardTitle>
+          <CardTitle className="text-sm text-center">Top 10 Tribus (Problemas)</CardTitle>
         </CardHeader>
         <CardContent className="pb-4">
           {tribeDistribution && (
             <BarChart 
               data={formatForBarChart(tribeDistribution.data)} 
-              height="350px"
-            />
-          )}
-        </CardContent>
-      </Card>
-      
-      {/* Squad Distribution (Doughnut Chart) */}
-      <Card variant="glass" className="h-full">
-        <CardHeader className="py-3">
-          <CardTitle className="text-sm text-center">Distribución por Squad</CardTitle>
-        </CardHeader>
-        <CardContent className="pb-4">
-          {squadDistribution && (
-            <DoughnutChart 
-              data={squadDistribution.data} 
-              height="350px"
-            />
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Tribe Distribution (Doughnut Chart) */}
-      <Card variant="glass" className="h-full">
-        <CardHeader className="py-3">
-          <CardTitle className="text-sm text-center">Distribución por Tribu</CardTitle>
-        </CardHeader>
-        <CardContent className="pb-4">
-          {tribeDistribution && (
-            <DoughnutChart 
-              data={tribeDistribution.data} 
               height="350px"
             />
           )}

@@ -64,6 +64,9 @@ router.get('/squad-distribution', analyticsController.getSquadDistribution);
 // GET /api/v1/analytics/tribe-distribution
 router.get('/tribe-distribution', analyticsController.getTribeDistribution);
 
+// GET /api/v1/analytics/cloud-app-distribution
+router.get('/cloud-app-distribution', analyticsController.getCloudAppDistribution);
+
 // GET /api/v1/analytics/autoremediado-distribution
 router.get('/autoremediado-distribution', analyticsController.getAutoremediadoDistribution);
 
