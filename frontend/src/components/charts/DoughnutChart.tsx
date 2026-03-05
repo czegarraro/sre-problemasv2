@@ -31,6 +31,8 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
       '#ea7ccc', // Pink
     ];
 
+    const total = data.reduce((sum, item) => sum + item.value, 0);
+
     return {
       backgroundColor: 'transparent',
       tooltip: {
@@ -46,21 +48,49 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
         left: 'center',
         textStyle: {
           color: '#94a3b8',
-          fontSize: 12,
+          fontSize: 11,
         },
-        itemWidth: 14,
-        itemHeight: 14,
+        itemWidth: 12,
+        itemHeight: 12,
+        itemGap: 8,
       },
+      graphic: [
+        {
+          type: 'text',
+          left: 'center',
+          top: '55%',
+          style: {
+            text: total.toLocaleString(),
+            textAlign: 'center',
+            fill: '#f8fafc',
+            fontSize: 22,
+            fontWeight: 'bold',
+            fontFamily: 'Inter, system-ui, sans-serif',
+          },
+        },
+        {
+          type: 'text',
+          left: 'center',
+          top: '63%',
+          style: {
+            text: 'total',
+            textAlign: 'center',
+            fill: '#64748b',
+            fontSize: 11,
+            fontFamily: 'Inter, system-ui, sans-serif',
+          },
+        },
+      ],
       color: colors || defaultColors,
       series: [
         {
           name: title || 'Distribution',
           type: 'pie',
-          radius: ['45%', '70%'], // Inner and outer radius for doughnut
+          radius: ['45%', '70%'],
           center: ['50%', '60%'],
           avoidLabelOverlap: true,
           itemStyle: {
-            borderRadius: 4,
+            borderRadius: 6,
             borderColor: '#0f172a',
             borderWidth: 2,
           },
@@ -70,7 +100,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
           emphasis: {
             label: {
               show: true,
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: 'bold',
               color: '#f8fafc',
               formatter: '{d}%',
